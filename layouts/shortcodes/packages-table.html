@@ -2,15 +2,17 @@
 	<th>Package</th>
 	<th>Version</th>
 	<th>Patches</th>
+	{{ $bottlerocketVersion := .Page.Params.title }}
 	{{ range .Page.Params.packages }}
 	<tr>
-		<td>{{ .package }}</td>
+		{{ $packageURL := printf "https://github.com/bottlerocket-os/bottlerocket/tree/v%s/packages/%s" $bottlerocketVersion .package }}
+		<td><a href="{{ $packageURL }}">{{ .package }}</a></td>
 		<td>{{ .version }}</td>
 		<td>
 			{{ with .patches }}
 				<ul>
 					{{ range $patch := . }}
-						<li>{{ $patch }}</li>
+						<li><a href="{{ printf "%s/%s" $packageURL $patch }}">{{ $patch }}</a></li>
 					{{ end }}
 				</ul>
 			{{ end }}
